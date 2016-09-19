@@ -1,0 +1,19 @@
+extends layout
+
+append stylesheets
+    link(rel='stylesheet', type='text/css', href='/css/page.css')
+
+block body
+    .ui.inverted.menu
+        .ui.container
+            a.item(href='/') Home
+            a.item(href='/tags') Tags
+            a.item(href='/upload') Upload
+
+            .right.item
+                .ui.icon.input
+                    input(placeholder='Search...', type='text')
+                    i.search.link.icon
+
+    #main.ui.container
+        block main

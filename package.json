@@ -1,0 +1,33 @@
+{
+  "name": "bookcase",
+  "version": "1.0.0",
+  "description": "Minimal book archive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/if-Team/bookcase.git"
+  },
+  "keywords": [
+    "book",
+    "archive"
+  ],
+  "author": "if-Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/if-Team/bookcase/issues"
+  },
+  "homepage": "https://github.com/if-Team/bookcase#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "^2.3.0"
+  }
+}
