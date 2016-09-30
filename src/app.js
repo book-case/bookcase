@@ -6,6 +6,7 @@ const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const preventInjection = require('./prevent-injection');
 
 let app = express();
 app.set('view engine', 'pug');
@@ -16,10 +17,12 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(preventInjection);
 
 app.use('/', require('./routes'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d' }));
 
 app.listen(app.get('port'), () => console.log('Listening on port', app.get('port')));
-i
+
+module.exports = app;
