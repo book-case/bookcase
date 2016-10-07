@@ -1,12 +1,15 @@
 const path = require('path');
 const express = require('express');
 
-const logger = require('morgan');
-const favicon = require('serve-favicon');
+const acceptLanguage = require('accept-language');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
 const preventInjection = require('./prevent-injection');
+
+acceptLanguage.language(config.langs);
 
 let app = express();
 app.set('view engine', 'pug');
