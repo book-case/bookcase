@@ -21,12 +21,14 @@
   },
   "homepage": "https://github.com/if-Team/bookcase#readme",
   "dependencies": {
+    "accept-language": "^3.0.15",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
+    "multer": "^1.2.0",
     "pug": "^2.0.0-beta6",
     "serve-favicon": "^2.3.0"
   }
