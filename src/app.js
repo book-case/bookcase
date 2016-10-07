@@ -22,8 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(preventInjection);
 
-app.use('/', require('./routes'));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use('/', require('../routes'));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d' }));
 
 app.listen(app.get('port'), () => console.log('Listening on port', app.get('port')));
