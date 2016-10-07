@@ -15,6 +15,7 @@ app.set('port', port);
 
 global.config = require('../server');
 
+var MongoClient = require('mongodb').MongoClient;
 MongoClient.connect(`mongodb://${config.db.address}:${config.db.port}/${config.db.name}`, (err, client) => {
 	global.db = client;
 	global.server = http.createServer(app);
