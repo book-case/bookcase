@@ -1,0 +1,7 @@
+{
+	"langs": ["en-US"],
+	"db": {
+		"address": "localhost",
+		"port": 28017
+	}
+}

@@ -26,7 +26,7 @@ router.get('/', (req, res, next) => {
 	res.render('upload');
 });
 
-router.post('/:id/:volume/', upload([
+router.post('/:id/:volume/', upload.fields([
 	{
 		name: 'pages',
 		maxCount: 1024
