@@ -1,10 +1,10 @@
-var app = require('./app');
-var debug = require('debug')('bookcase:server');
-var fs = require('fs');
-var http = require('http');
+const app = require('./app');
+const debug = require('debug')('bookcase:server');
+const fs = require('fs');
+const http = require('http');
 
-var port = ((val) => {
-	var port = parseInt(val, 10);
+const port = ((val) => {
+	let port = parseInt(val, 10);
 
 	if(isNaN(port)) return val;
 	if(port >= 0) return port;
@@ -14,10 +14,9 @@ var port = ((val) => {
 app.set('port', port);
 
 global.config = require('../server');
-global.translator = require('./translator');
 
 MongoClient.connect(`mongodb://${config.db.address}:${config.db.port}/${config.db.name}`, (err, client) => {
-	global.mongo = client;
+	global.db = client;
 	global.server = http.createServer(app);
 
 	server.listen(port);

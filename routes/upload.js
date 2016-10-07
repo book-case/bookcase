@@ -17,7 +17,7 @@ let upload = multer({
 		},
 
 		destination: (req, file, cb) => {
-			cb(null, 'tmp/uploads/')
+			cb(null, 'tmp/uploads/');
 		}
 	})
 });
@@ -32,7 +32,7 @@ router.post('/:id/:volume/', upload([
 		maxCount: 1024
 	}
 ]), (req, res, next) => {
-	
+
 });
 
 module.exports = router;
