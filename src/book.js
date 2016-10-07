@@ -7,7 +7,7 @@ class Book{
 
 		this.volumes = {};
 		Object.keys(data.volumes).forEach((v) => {
-			volumes[v] = new Volume(this, data.volumes[v]);
+			volumes[v] = new Volume(this, v, data.volumes[v]);
 		});
 	}
 
@@ -67,6 +67,14 @@ Book.createBook = (name, volumes) => {
 			reject(err);
 		});
 	});
+};
+
+Book.getById = (id) => {
+	//TODO
+};
+
+Book.getBySlug = (id) => {
+	//TODO
 };
 
 module.exports = Book;

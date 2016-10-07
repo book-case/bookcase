@@ -5,6 +5,7 @@ const supportsMime = {
 	'image/bmp': 'bmp',
 	'image/jpeg': 'jpg'
 };
+const numericCheck = /^\d+$/;
 
 let router = require('express').Router();
 let upload = multer({
@@ -32,7 +33,7 @@ router.post('/:id/:volume/', upload([
 		maxCount: 1024
 	}
 ]), (req, res, next) => {
-
+	let isSlug = !numericCheck.test(req.params.id);
 });
 
 module.exports = router;
