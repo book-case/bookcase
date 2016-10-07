@@ -3,6 +3,6 @@ module.exports = (req, res, next) => {
 	verifyError.status = 403;
 
 	if(!req.session.user) return next(verifyError);
-
 	//TODO add authentications
+	next();
 };

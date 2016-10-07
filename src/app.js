@@ -1,17 +1,15 @@
 const path = require('path');
 const express = require('express');
 
-const acceptLanguage = require('accept-language');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const preventInjection = require('./prevent-injection');
+const requestLanguage = require('express-request-language');
 const translator = require('./translator');
 const verifyUser = require('./verify-user');
-
-acceptLanguage.language(config.langs);
 
 let app = express();
 app.set('view engine', 'pug');
@@ -23,6 +21,9 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(preventInjection);
+app.use(requestLanguage({
+	languages: config.langs
+}));
 app.use(translator);
 
 app.use('/', require('../routes'));
