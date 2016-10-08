@@ -13,7 +13,7 @@ class Book{
 
 	createSaveData(){
 		let data = {};
-		Object.keys(this).forEach((v) => {딩
+		Object.keys(this).forEach((v) => {
 			data[v] = this[v];
 		});
 		data.volumes = {};
