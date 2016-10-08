@@ -13,7 +13,7 @@ class Book{
 
 	createSaveData(){
 		let data = {};
-		Object.keys(this).forEach((v) => {
+		Object.keys(this).forEach((v) => {딩
 			data[v] = this[v];
 		});
 		data.volumes = {};
@@ -33,48 +33,48 @@ class Book{
 			$set: this.createSaveData()
 		});
 	}
-}
 
-Book.createBook = (name, volumes) => {
-	return new Promise((reject, resolve) => {
-		db
-		.collection('settings')
-		.findOne({name: 'last-item'})
-		.then((result) => {
-			return db
+	static createBook(name, volumes){
+		return new Promise((reject, resolve) => {
+			db
 			.collection('settings')
-			.findOneAndUpdate({
-				name: 'last-item'
-			}, {
-				$set: {
-					value: result.value + 1
-				}
-			});
-		}).then(() => {
-			let book = new Book({
-				id: result.value,
-				name,
-				slug: slugify(name),
-				volumes
-			});
+			.findOne({name: 'last-item'})
+			.then((result) => {
+				return db
+				.collection('settings')
+				.findOneAndUpdate({
+					name: 'last-item'
+				}, {
+					$set: {
+						value: result.value + 1
+					}
+				});
+			}).then(() => {
+				let book = new Book({
+					id: result.value,
+					name,
+					slug: slugify(name),
+					volumes
+				});
 
-			book.save().then(() => {
-				resolve(book);
-			}),catch((err) => {
+				book.save().then(() => {
+					resolve(book);
+				}),catch((err) => {
+					reject(err);
+				});
+			}).catch((err) => {
 				reject(err);
 			});
-		}).catch((err) => {
-			reject(err);
 		});
-	});
-};
+	}
 
-Book.getById = (id) => {
-	//TODO
-};
+	static getById(id){
 
-Book.getBySlug = (id) => {
-	//TODO
-};
+	}
+
+	static getBySlug(slug){
+
+	}
+}
 
 module.exports = Book;
