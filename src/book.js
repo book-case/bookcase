@@ -11,6 +11,10 @@ class Book{
 		});
 	}
 
+	getVolume(volumeId){
+		return volumes[volumeId];
+	}
+
 	createSaveData(){
 		let data = {};
 		Object.keys(this).forEach((v) => {딩
@@ -59,7 +63,7 @@ class Book{
 
 				book.save().then(() => {
 					resolve(book);
-				}),catch((err) => {
+				}).catch((err) => {
 					reject(err);
 				});
 			}).catch((err) => {
@@ -69,11 +73,27 @@ class Book{
 	}
 
 	static getById(id){
-
+		return new Promise((reject, resolve) => {
+			db
+			.collection('book')
+			.findOne({id}).then((data) =>{
+				resolve(new Book(data));
+			}).catch((err) => {
+				reject(err);
+			});
+		});
 	}
 
 	static getBySlug(slug){
-
+		return new Promise((reject, resolve) => {
+			db
+			.collection('book')
+			.findOne({slug}).then((data) => {
+				resolve(new Book(data));
+			}).catch((err) => {
+				reject(err);
+			});
+		});
 	}
 }
 
