@@ -1,9 +1,11 @@
 const {slugify} = require('transliteration');
+const tagRegex = /^[a-z0-9-]{1,1024}$/;
 class Book{
 	constructor(data){
 		this.id = data.id;
 		this.name = data.name;
 		this.slug = data.slug;
+		this.tags = data.tags;
 
 		this.volumes = {};
 		Object.keys(data.volumes).forEach((v) => {
@@ -38,7 +40,7 @@ class Book{
 		});
 	}
 
-	static createBook(name, volumes){
+	static createBook(name, volumes, tags){
 		return new Promise((reject, resolve) => {
 			db
 			.collection('settings')
@@ -58,16 +60,19 @@ class Book{
 					id: result.value,
 					name,
 					slug: slugify(name),
-					volumes
+					volumes,
+					tags
 				});
 
 				book.save().then(() => {
 					resolve(book);
 				}).catch((err) => {
-					reject(err);
+					console.error(err);
+					reject(new Error('server.saveerror'));
 				});
 			}).catch((err) => {
-				reject(err);
+				console.error(err);
+				reject(new Error('server.dberror'));
 			});
 		});
 	}
@@ -79,7 +84,8 @@ class Book{
 			.findOne({id}).then((data) =>{
 				resolve(new Book(data));
 			}).catch((err) => {
-				reject(err);
+				console.error(err);
+				reject(new Error('server.dberror'));
 			});
 		});
 	}
@@ -91,7 +97,59 @@ class Book{
 			.findOne({slug}).then((data) => {
 				resolve(new Book(data));
 			}).catch((err) => {
-				reject(err);
+				console.error(err);
+				reject(new Error('server.dberror'));
+			});
+		});
+	}
+
+	static searchBooks(name, tag, page, showAmount){
+		return new Promise((reject, resolve) => {
+			if((typeof page !== 'string' || !/^\d{1,256}$/.test(page)) && typeof page !== 'number') page = 1;
+			if(typeof page === 'string') page = parseInt(page);
+			if(page <= 0) page = 1;
+
+			tag = tag.split(' ').filter((v) => tagRegex.test(v));
+			let nameQuery = {
+				$text: '"' + name + '"'
+			};
+
+			let findResult = db
+				.collection('book')
+				.find({
+					$and: [
+						{
+							$or: [
+								{slug: nameQuery},
+								{name: nameQuery}
+							]
+						},
+						{
+							tags: {
+								$all: tag
+							}
+						}
+					]
+				});
+
+			let maxPage;
+			findResult.count().then((count) => {
+				let skipAmount = showAmount * (page - 1);
+				if(skipAmount > count) page = 1;
+				maxPage = Math.ceil(count / showAmount);
+
+				return findResult
+					.skip(skipAmount)
+					.limit(showAmount)
+					.toArray();
+			}).then((result) => {
+				resolve({
+					result,
+					maxPage
+				});
+			}).catch((err) => {
+				console.error(err);
+				reject(new Error('server.dberror'));
 			});
 		});
 	}
