@@ -14,10 +14,6 @@ class Volume{
 	save(){
 		this.book.save();
 	}
-
-	getBook(){
-		return this.book;
-	}
 }
 
 module.exports = Volume;
