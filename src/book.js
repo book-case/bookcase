@@ -41,7 +41,7 @@ class Book{
 	}
 
 	static createBook(name, volumes, tags){
-		return new Promise((reject, resolve) => {
+		return new Promise((resolve, reject) => {
 			db
 			.collection('settings')
 			.findOne({name: 'last-item'})
@@ -78,7 +78,7 @@ class Book{
 	}
 
 	static getById(id){
-		return new Promise((reject, resolve) => {
+		return new Promise((resolve, reject) => {
 			db
 			.collection('book')
 			.findOne({id}).then((data) =>{
@@ -91,7 +91,7 @@ class Book{
 	}
 
 	static getBySlug(slug){
-		return new Promise((reject, resolve) => {
+		return new Promise((resolve, reject) => {
 			db
 			.collection('book')
 			.findOne({slug}).then((data) => {
@@ -104,7 +104,7 @@ class Book{
 	}
 
 	static searchBooks(name, tag, page, showAmount){
-		return new Promise((reject, resolve) => {
+		return new Promise((resolve, reject) => {
 			if((typeof page !== 'string' || !/^\d{1,256}$/.test(page)) && typeof page !== 'number') page = 1;
 			if(typeof page === 'string') page = parseInt(page);
 			if(page <= 0) page = 1;

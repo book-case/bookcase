@@ -9,7 +9,7 @@ class User{
 	}
 
 	verifyEmail(email){
-		return new Promise((reject, resolve) => {
+		return new Promise((resolve, reject) => {
 			const token = createToken(256);
 			this.verification.email = {
 				verified: false,
