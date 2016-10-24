@@ -1,7 +1,7 @@
 {
-	"ko-KR": {
-		"user.verify": "로그인을 먼저 하여주세요!",
-		"server.dberror": "DB를 쿼리하는 중에 오류가 발생했습니다!",
-		"server.saveerror": "책을 저장하는 중에 오류가 발생했습니다!"
-	}
+    "ko-KR": {
+        "user.verify": "로그인을 먼저 하여주세요!",
+        "server.dberror": "DB를 쿼리하는 중에 오류가 발생했습니다!",
+        "server.saveerror": "책을 저장하는 중에 오류가 발생했습니다!"
+    }
 }

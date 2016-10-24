@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(preventInjection);
 app.use(requestLanguage({
-	languages: (global.config && global.config.langs) ? global.config.langs : ['en-US']
+    languages: (global.config && global.config.langs) ? global.config.langs : ['en-US']
 }));
 app.use(translator);
 

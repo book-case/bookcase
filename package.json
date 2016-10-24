@@ -26,7 +26,7 @@
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-	"express-request-language": "^1.1.7",
+    "express-request-language": "^1.1.7",
     "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
