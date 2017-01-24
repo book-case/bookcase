@@ -1,3 +1,4 @@
+const path = require('path');
 const multer = require('multer');
 const supportsMime = {
 	'image/png': 'png',
@@ -7,8 +8,8 @@ const supportsMime = {
 };
 const numericCheck = /^\d+$/;
 
-let router = require('express').Router();
-let upload = multer({
+const router = require('express').Router();
+const upload = multer({
 	storage: multer.diskStorage({
 		filename: (req, file, cb) => {
 			let extension = supportsMime[file.mimetype];
@@ -18,7 +19,7 @@ let upload = multer({
 		},
 
 		destination: (req, file, cb) => {
-			cb(null, 'tmp/uploads/');
+			cb(null, path.resolve(__dirname, '..', 'tmp', 'uploads'));
 		}
 	})
 });
@@ -34,6 +35,7 @@ router.post('/:id/:volume/', upload.fields([
 	}
 ]), (req, res, next) => {
 	let isSlug = !numericCheck.test(req.params.id);
+	//TODO
 });
 
 module.exports = router;

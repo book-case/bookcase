@@ -1,7 +1,7 @@
-const app = require('./app');
 const debug = require('debug')('bookcase:server');
 const fs = require('fs');
 const http = require('http');
+const path = require('path');
 
 const port = ((val) => {
 	let port = parseInt(val, 10);
@@ -11,13 +11,30 @@ const port = ((val) => {
 	return false;
 })(process.env.PORT || '3000');
 
-app.set('port', port);
-
 global.config = require('../server');
+
+try{
+	global.config['session-secret'] = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'secret.json')))['session-secret'];
+}catch(err){
+	console.log('Generated Session Key!');
+	global.config['session-secret'] = Math.random().toString(36).slice(2).split('').map((v) => (Math.random() < 0.5) ? v.toUpperCase() : v.toLowerCase()).join('');
+	fs.writeFileSync(path.join(__dirname, '..', 'secret.json'), JSON.stringify({
+		'session-secret': global.config['session-secret']
+	}, '\t'));
+}
 
 var MongoClient = require('mongodb').MongoClient;
 MongoClient.connect(`mongodb://${config.db.address}:${config.db.port}/${config.db.name}`, (err, client) => {
+	if(err){
+		console.error(err);
+		return;
+	}
+	
 	global.db = client;
+
+	const app = require('./app');
+	app.set('port', port);
+
 	global.server = http.createServer(app);
 
 	server.listen(port);

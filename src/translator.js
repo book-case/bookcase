@@ -19,4 +19,6 @@ class Translator{
 
 module.exports = (req, res, next) => {
 	res.locals.translator = new Translator(req).translate;
+
+	next();
 };

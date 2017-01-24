@@ -22,16 +22,38 @@
   "homepage": "https://github.com/if-Team/bookcase#readme",
   "dependencies": {
     "accept-language": "^3.0.15",
+    "babel-polyfill": "^6.22.0",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
+    "connect-mongo": "^1.3.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
-	"express-request-language": "^1.1.7",
+    "express-request-language": "^1.1.7",
+    "express-session": "^1.15.0",
+    "hbs": "^4.0.1",
+    "jquery": "^3.1.1",
+    "mdi": "^1.8.36",
     "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
-    "pug": "^2.0.0-beta6",
+    "semantic-ui-css": "^2.2.4",
     "serve-favicon": "^2.3.0",
-    "transliteration": "^1.1.9"
+    "transliteration": "^1.1.9",
+    "vue": "^2.1.10"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta",
+    "file-loader": "^0.9.0",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
+    "vue-loader": "^10.0.2",
+    "vue-template-compiler": "^2.1.10",
+    "webpack": "^2.0.0",
+    "webpack-dev-middleware": "^1.9.0"
   }
 }

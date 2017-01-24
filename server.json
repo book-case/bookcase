@@ -2,6 +2,7 @@
 	"langs": ["en-US"],
 	"db": {
 		"address": "localhost",
-		"port": 28017
+		"port": 27017,
+		"name": "bookcase"
 	}
 }
