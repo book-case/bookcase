@@ -9,9 +9,5 @@
 
 <script>
 	import 'semantic-ui-css/semantic.css';
-	export default {
-		data(){
-			return {};
-		}
-	};
+	export default {};
 </script>

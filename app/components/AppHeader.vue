@@ -2,9 +2,9 @@
 	<div class="app-header">
 		<div class="ui inverted menu">
 			<div class="ui container">
-				<content></content>
+				<slot></slot>
 			</div>
-			
+
 			<app-search></app-search>
 		</div>
 	</div>
@@ -15,9 +15,6 @@
 	import AppSearch from './AppSearch.vue';
 
 	export default {
-		data(){
-			return {};
-		},
 		components: {
 			AppSearch
 		}

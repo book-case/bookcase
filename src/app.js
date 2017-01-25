@@ -50,15 +50,13 @@ app.use(requestLanguage({
 }));
 app.use(translator);
 
-app.use(webpackMiddleware(webpack(require('../webpack.config.js')), {
-	publicPath: '/dist/'
-}));
+if((process.env.NODE_ENV || 'development') === 'development'){
+	app.use(webpackMiddleware(webpack(require('../webpack.config.js')), {
+		publicPath: '/dist/'
+	}));
+}
 
-app.use(express.static(path.join(__dirname, 'bower_components'), {
-	maxAge: '7d'
-}));
-
-app.use(express.static(path.join(__dirname, 'dist'), {
+app.use('/dist', express.static(path.join(__dirname, 'dist'), {
 	maxAge: '7d'
 }));
 
