@@ -1,8 +1,11 @@
 module.exports = (req, res, next) => {
-	const verifyError = new Error(res.locals.translator('user.verify'));
-	verifyError.status = 403;
+	res.locals.verify = () => {
+		//TODO add authentications
+		if(!req.session.user){
+			return false;
+		}
+		return true;
+	};
 
-	if(!req.session.user) return next(verifyError);
-	//TODO add authentications
 	next();
 };

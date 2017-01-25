@@ -60,10 +60,10 @@ app.use('/dist', express.static(path.join(__dirname, 'dist'), {
 	maxAge: '7d'
 }));
 
+app.use(verifyUser);
+
 app.use('/', require('../routes'));
-//User-only zone
-app.use(/(upload|user)/, verifyUser);
-app.use('/upload', require('../routes/upload'));
+app.use('/book', require('../routes/book'));
 
 app.use((req, res, next) => {
 	const err = new Error("Not Found");

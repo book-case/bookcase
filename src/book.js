@@ -84,7 +84,7 @@ class Book{
 			.findOne({id}).then((data) =>{
 				resolve(new Book(data));
 			}).catch((err) => {
-				console.error(err);
+				//console.error(err);
 				reject(new Error('server.dberror'));
 			});
 		});
@@ -97,7 +97,7 @@ class Book{
 			.findOne({slug}).then((data) => {
 				resolve(new Book(data));
 			}).catch((err) => {
-				console.error(err);
+				//console.error(err);
 				reject(new Error('server.dberror'));
 			});
 		});

@@ -36,10 +36,12 @@
     "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
+    "page": "^1.7.1",
     "semantic-ui-css": "^2.2.4",
     "serve-favicon": "^2.3.0",
     "transliteration": "^1.1.9",
-    "vue": "^2.1.10"
+    "vue": "^2.1.10",
+    "vue-spinner": "^1.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
