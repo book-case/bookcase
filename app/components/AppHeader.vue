@@ -3,12 +3,18 @@
 		<div class="ui inverted menu">
 			<div class="ui container">
 				<slot></slot>
-			</div>
 
-			<app-search></app-search>
+				<app-search></app-search>
+			</div>
 		</div>
 	</div>
 </template>
+
+<style scoped>
+	.app-header {
+		z-index: 10;
+	}
+</style>
 
 <script>
 	import 'semantic-ui-css/semantic.css';

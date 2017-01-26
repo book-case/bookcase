@@ -1,19 +1,26 @@
 <template>
 	<app-header>
-		<app-menu href="/">Home</app-menu>
-		<app-menu href="/tags" icon="tag" icon-before>Tags</app-menu>
-		<app-menu href="/upload" icon="upload" icon-before>Upload</app-menu>
+		<app-link-menu href="/">Home</app-link-menu>
+		<app-link-menu href="/tags" icon="tag" icon-before>Tags</app-link-menu>
+		<!-- TODO change -->
+		<app-link-menu href="/upload" icon="plus" icon-before>New Book</app-link-menu>
 	</app-header>
 </template>
 
 <script>
 	import AppHeader from '../components/AppHeader.vue';
-	import AppMenu from '../components/AppMenu.vue';
+	import AppLinkMenu from '../components/AppLinkMenu.vue';
 
 	export default {
 		components: {
+			AppButtonMenu,
 			AppHeader,
-			AppMenu
+			AppLinkMenu
+		},
+		methods: {
+			newBook(){
+
+			}
 		}
 	}
 </script>

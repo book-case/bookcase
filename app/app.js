@@ -1,26 +1,22 @@
 import 'babel-polyfill';
+import 'whatwg-fetch';
+import App from './App.vue';
 import Vue from 'vue';
-import Loading from './pages/Loading.vue';
-import page from 'page';
-import routes from './routes';
+import VueRouter from 'vue-router';
+import routes from './src/routes';
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+	mode: 'history',
+	base: __dirname,
+	routes
+});
 
 const app = new Vue({
 	el: '#app',
-	data: {
-		ViewComponent: {
-			render(h){
-				h(Loading);
-			}
-		}
-	},
+	router,
 	render(h){
-		return h(this.ViewComponent);
+		return h(App);
 	}
 });
-
-Object.keys(routes).forEach((route) => {
-	page(route, () => app.ViewComponent = routes[route]);
-});
-
-page('*', () => app.ViewComponent = require('./pages/Status404.vue'));
-page();

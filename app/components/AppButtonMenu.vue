@@ -1,5 +1,5 @@
 <template>
-	<a class="app-menu item" :href="href">
+	<a class="app-menu item" @click="click">
 		<i v-if="iconBefore" :class="iconClass"></i>
 		<slot></slot>
 		<i v-if="!iconBefore" :class="iconClass"></i>
@@ -12,8 +12,8 @@
 
 	export default {
 		props: {
-			href: {
-				type: String,
+			click: {
+				type: Function,
 				required: true
 			},
 

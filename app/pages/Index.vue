@@ -1,15 +1,8 @@
 <template>
-	<div id="app">
-		<bookcase-header></bookcase-header>
-	</div>
+	<section class="index">
+	</section>
 </template>
 
 <script>
-	import BookcaseHeader from '../layouts/BookcaseHeader.vue';
-
-	export default {
-		components: {
-			BookcaseHeader
-		}
-	}
+	export default {}
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="app-loader">
+	<div class="app-loader" :style="style">
 		<dot-loader :color="color" :size="size" :loading="loading"></dot-loader>
 	</div>
 </template>
@@ -23,6 +23,11 @@
 		props: ['color', 'size', 'loading'],
 		components: {
 			DotLoader
+		},
+		computed: {
+			style(){
+				return this.loading ? '' : 'display: none';
+			}
 		}
 	};
 </script>

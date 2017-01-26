@@ -25,4 +25,8 @@ router.get('/:id', (req, res, next) => {
 	*/
 });
 
+router.get('/:id/edit', (req, res, next) => {
+	res.render('app');
+});
+
 module.exports = router;

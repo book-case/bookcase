@@ -64,8 +64,18 @@ app.use(verifyUser);
 
 app.use('/', require('../routes'));
 app.use('/book', require('../routes/book'));
+app.use('/image', require('../routes/image'));
+app.use('/login', require('../routes/login'));
+app.use('/signup', require('../routes/signup'));
+app.use('/tags', require('../routes/tags'));
+app.use('/user', require('../routes/user'));
 
 app.use((req, res, next) => {
+	if(req.accepts('html')){
+		res.status(404).render('app');
+		return;
+	}
+
 	const err = new Error("Not Found");
 	err.status = 404;
 	next(err);
