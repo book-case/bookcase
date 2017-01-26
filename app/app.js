@@ -22,5 +22,5 @@ Object.keys(routes).forEach((route) => {
 	page(route, () => app.ViewComponent = routes[route]);
 });
 
-page('*', () => app.ViewComponent = require('./pages/Status404.vue'));
+page('*', () => app.ViewComponent = require('./pages/Status_404.vue'));
 page();
