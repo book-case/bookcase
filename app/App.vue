@@ -2,7 +2,7 @@
 	<div id="app">
 		<bookcase-header></bookcase-header>
 		<bookcase-main>
-			<transition name="slide-fade">
+			<transition name="slide-fade" mode="out-in">
 				<keep-alive>
 					<router-view></router-view>
 				</keep-alive>
@@ -19,7 +19,7 @@
 		transition: all .3s ease-in-out;
 	}
 	.slide-fade-enter, .slide-fade-leave-to{
-		transform: translateX(-30px);
+		/*transform: translateX(-50px);*/
 		opacity: 0;
 	}
 </style>

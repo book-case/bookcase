@@ -1,5 +1,5 @@
 <template>
-	<a class="app-menu item" @click="click">
+	<a class="app-button-menu item" @click="click">
 		<i v-if="iconBefore" :class="iconClass"></i>
 		<slot></slot>
 		<i v-if="!iconBefore" :class="iconClass"></i>

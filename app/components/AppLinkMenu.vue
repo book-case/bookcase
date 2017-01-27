@@ -1,5 +1,5 @@
 <template>
-	<router-link class="app-menu item" :to="href">
+	<router-link class="app-link-menu item" :to="href">
 		<i v-if="iconBefore" :class="iconClass"></i>
 		<slot></slot>
 		<i v-if="!iconBefore" :class="iconClass"></i>

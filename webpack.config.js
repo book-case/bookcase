@@ -44,7 +44,10 @@ module.exports = {
 	},
 
 	plugins: [
-		new ExtractTextPlugin(path.resolve(__dirname, 'dist', 'bookcase.css'))
+		new ExtractTextPlugin(path.resolve(__dirname, 'dist', 'bookcase.css')),
+		new webpack.ProvidePlugin({
+			'jQuery': 'jquery'
+		})
 	],
 	devtool: '#eval-source-map'
 };

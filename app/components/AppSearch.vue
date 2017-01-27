@@ -1,5 +1,5 @@
 <template>
-	<div class="app-search right item">
+	<div class="app-search">
 		<div class="ui icon input">
 			<input placeholder="Search..." type="text">
 			<i class="search link icon"></i>
