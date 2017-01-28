@@ -1,13 +1,18 @@
 class Volume{
 	constructor(book, id, data){
+		//id = name = volume number
 		this.id = id;
-		this.file = data.file;
+		this.pages = data.pages;
 		this.book = book;
+		this.tags = data.tags;
+		this.uploader = data.uploader;
 	}
 
 	createSaveData(){
 		return {
-			file: this.file
+			pages: this.pages,
+			tags: this.tags,
+			uploader: this.uploader
 		};
 	}
 

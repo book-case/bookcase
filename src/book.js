@@ -1,5 +1,7 @@
 const {slugify} = require('transliteration');
 const tagRegex = /^[a-z0-9-]{1,256}$/;
+const volumeNameRegex = /^\d{1,8}(-\d{1,8})?$/;
+const numericCheck = /^\d+$/;
 const languageList = [
 	'Chinese',
 	'English',
@@ -37,6 +39,7 @@ class Book{
 		this.tags = data.tags;
 		this.language = data.language;
 		this.author = data.author;
+		this.uploader = data.uploader;
 
 		this.volumes = {};
 		Object.keys(data.volumes).forEach((v) => {
@@ -71,7 +74,35 @@ class Book{
 		});
 	}
 
-	static createBook(name, author, language, tags){
+	createVolume(name, tags, uploader){
+		//Sanitize name
+		for(let placeholderName = 1; this.volumes[`${i}`] === undefined; placeholderName++);
+
+		if(typeof name !== string) name = placeholderName;
+		if(!volumeNameRegex.test(name)) name = placeholderName;
+
+		const match = name.match(volumeNameRegex);
+		if(match[1] && match[2] && parseInt(match[1]) > parseInt(match[2])) name = placeholderName;
+
+		//Sanitize tags
+		if(typeof tags === 'string' && tags.length < 1024) tags = tags.split(' ');
+		if(!Array.isArray(tags)) tags = [];
+		if(tags.length >= 1024) tags = [];
+		tags = tags.filter((v) => tagRegex.test(v));
+		if(tags.join(' ') >= 1024) tags = [];
+
+		if(this.volumes[name]) return false;
+
+		this.volumes[name] = new Volume(this, name, {
+			pages: [],
+			tags,
+			uploader
+		});
+		this.save();
+		return true;
+	}
+
+	static createBook(name, author, language, tags, uploader){
 		//Sanitize name
 		if(typeof name !== 'string' || name.length >= 128) name = "Untitled Book";
 
@@ -112,6 +143,7 @@ class Book{
 					volumes: [],
 					language,
 					tags
+					uploader
 				});
 
 				book.save().then(() => {
@@ -127,6 +159,54 @@ class Book{
 		});
 	}
 
+	static exists(idOrSlug){
+		return new Promise((resolve, reject) => {
+			if(!numericCheck.test(req.params.id)){
+				const slug = idOrSlug;
+				db
+				.collection('book')
+				.find({slug})
+				.limit(1)
+				.count()
+				.then((v) => {
+					if(v > 0){
+						resolve('slug');
+					}
+
+					resolve(false);
+				}).catch((err) => reject(err));
+			}else{
+				const id = idOrSlug;
+				db
+				.collection('book')
+				.find({id})
+				.limit(1)
+				.count()
+				.then((v) => {
+					if(v > 0){
+						resolve('id');
+					}
+
+					resolve(false);
+				}).catch((err) => reject(err));
+			}
+		});
+	}
+
+	static getBook(idOrSlug){
+		return new Promise((resolve, reject) => {
+			Book.exists(idOrSlug).then((v) => {
+				if(v === 'slug') return getBySlug(v);
+				if(v === 'id') return getById(v);
+				resolve(false);
+			}).then((v) => {
+				resolve(v);
+			}).catch((err) => {
+				reject(err);
+			});
+		});
+	}
+
 	static getById(id){
 		return new Promise((resolve, reject) => {
 			db
@@ -134,7 +214,7 @@ class Book{
 			.findOne({id}).then((data) =>{
 				resolve(new Book(data));
 			}).catch((err) => {
-				//console.error(err);
+				console.error(err);
 				reject(new Error('server.dberror'));
 			});
 		});
@@ -147,7 +227,7 @@ class Book{
 			.findOne({slug}).then((data) => {
 				resolve(new Book(data));
 			}).catch((err) => {
-				//console.error(err);
+				console.error(err);
 				reject(new Error('server.dberror'));
 			});
 		});

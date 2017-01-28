@@ -1,5 +1,6 @@
 <template>
 	<div class="bookcase-book-view">
+
 	</div>
 </template>
 
@@ -28,6 +29,11 @@
 
 			id: {
 				type: String,
+				required: true
+			},
+
+			volumes: {
+				type: Array,
 				required: true
 			}
 		}

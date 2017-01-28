@@ -1,3 +1,4 @@
+const Book = require('../src/book');
 const path = require('path');
 const multer = require('multer');
 const supportsMime = {
@@ -6,7 +7,6 @@ const supportsMime = {
 	'image/bmp': 'bmp',
 	'image/jpeg': 'jpg'
 };
-const numericCheck = /^\d+$/;
 
 const router = require('express').Router();
 const upload = multer({
@@ -25,17 +25,59 @@ const upload = multer({
 });
 
 router.put('/', (req, res, next) => {
-	/*
-		TODO create a new book and return id
-	*/
+	const user = res.locals.verifyUser();
+	if(!user) return res.status(403).json({
+		success: false,
+		reason: 'not_logged_in'
+	});
+
+	Book.createBook(
+		req.query.name,
+		req.query.author,
+		req.query.language,
+		req.query.tags,
+		user
+	).then((v) => {
+		res.status(200).json({
+			success: true,
+			id: v.id
+		});
+	}).catch((err) => {
+		res.status(500).json({
+			success: false,
+			reason: 'internal_server'
+		});
+	});
 });
 
 router.put('/:id/:volume', (req, res, next) => {
-	let isSlug = !numericCheck.test(req.params.id);
-	/*
-		TODO check for id existence. (if not, reject it)
-		TODO check for volume existence. (if exists, reject it)
-	*/
+	const user = res.locals.verifyUser();
+
+	if(!user) return res.status(403).json({
+		success: false,
+		reason: 'not_logged_in'
+	});
+
+	Book.getBook(req.params.id).then((v) => {
+		if(!v){
+			return res.status(403).json({
+				success: false,
+				reason: 'book_exists'
+			});
+		}
+
+		let result = v.createVolume(req.params.volume, req.query.tags, user);
+		if(result){
+			res.status(200).json({
+				success: true
+			});
+		}else{
+			res.status(403).json({
+				success: false,
+				reason: 'volume_exists'
+			});
+		}
+	});
 });
 
 router.put('/:id/:volume/:page', upload.single('page'), (req, res, next) => {
@@ -60,10 +102,14 @@ router.patch('/:id/:volume', (req, res, next) => {
 	*/
 });
 
+router.delete('/:id', (req, res, next) => {
+	//TODO permission check
+	//TODO check if no volume exists
+});
+
 router.delete('/:id/:volume', (req, res, next) => {
 	/*
 		TODO permission check
-		TODO if no volume exists, automatically delete the book.
 	*/
 });
 
@@ -75,11 +121,13 @@ router.delete('/:id/:volume/:page', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
 	if(req.accepts(['html', 'json']) === 'html'){
+		/*
+			TODO if the book only has 1 volume, redirect to the volume
+		*/
 		return res.render('app');
 	}
 	/*
-		TODO Show volumes(editions)
-		TODO if the book only has 1 volume, redirect to the volume
+		TODO Show book info (Name, Author, Language, Tags, Volumes)
 	*/
 });
 
@@ -88,12 +136,8 @@ router.get('/:id/:volume', (req, res, next) => {
 		return res.render('app');
 	}
 	/*
-		TODO Show volume info (Title, Volume, Author, Tags, Language)
+		TODO Show volume info (Parent Book Id, Volume, Tags, Pages)
 	*/
-});
-
-router.get('/:id/:volume/download', (req, res, next) => {
-
 });
 
 module.exports = router;
